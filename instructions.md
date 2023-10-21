@@ -1,4 +1,4 @@
-Type in `git init -b main` inside your unity repo.
+Type in `git init -b main` inside your unity project.
 
 Type in `git add *` once project is generated.
 
