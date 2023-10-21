@@ -26,4 +26,8 @@ public class GameManager : MonoBehaviour
         //takes in level or which room we're in
         //close doors, spawn enemy, set count, despawns last room, spawns next room
     }
+    public void endGame()
+    {
+        //
+    }
 }
