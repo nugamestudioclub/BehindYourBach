@@ -4,16 +4,22 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public List<Object> enemies;
+    public List<GameObject> enemies;
 
     private void Start()
     {
-        enemies = new List<Object>();
+        enemies = new List<GameObject>();
     }
 
-    public void SpawnEnemy(EnemyList enemylist)
+    public void SpawnEnemy(EnemyList enemylist, Transform gameobject)
     {
-        Debug.Log("spawning"+ enemylist.enemies[1]);
+       
+        for (int i=0 ; i < enemylist.enemies.Length ; i++)
+        {
+            
+            GameObject newEnemy= Instantiate(enemylist.enemies[i], enemylist.xy[i], Quaternion.identity, gameobject.transform);
+            
+        }
 
     }
 }

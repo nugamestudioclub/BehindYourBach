@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class RoomController : MonoBehaviour
 {
+    GameObject entryDoor;
+    GameObject exitDoor;
     //enemy list
 
     //doors
@@ -17,8 +19,8 @@ public class RoomController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
 
-        FindObjectOfType<EnemySpawner>().SpawnEnemy(enemylist);
-        //dissable trigger
+        FindObjectOfType<EnemySpawner>().SpawnEnemy(enemylist,this.transform);
+        this.GetComponent<BoxCollider2D>().enabled = false;
         //close doors
     }
 }

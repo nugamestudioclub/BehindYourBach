@@ -5,9 +5,9 @@ using UnityEngine;
 [System.Serializable]
 public class EnemyList
 {
-    public float[] x;
-    public float[] y;
+    
+    public Vector2[] xy;
 
-    public Object[] enemies;
+    public GameObject[] enemies;
 
 }
