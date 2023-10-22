@@ -6,17 +6,14 @@ public class RoomController : MonoBehaviour
 {
     [SerializeField] private GameObject entryDoor;
     [SerializeField] private GameObject exitDoor;
+    public EnemyList enemylist;
 
     private void Start()
     {
         entryDoor.gameObject.SetActive(false);
+        
     }
     
-
-
-    public EnemyList enemylist;
-
-
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -25,6 +22,14 @@ public class RoomController : MonoBehaviour
         entryDoor.gameObject.SetActive(true);
         FindObjectOfType<GameManager>().setEnemy(enemylist.enemies.Length);
         this.GetComponent<BoxCollider2D>().enabled = false;
-        //subscribe to observer
+        GameManager.current.ondeath += ExitRoom;
+    }
+
+    private void ExitRoom()
+    {
+        exitDoor.gameObject.SetActive(false);
+        GameManager.current.ondeath -= ExitRoom;
+
+
     }
 }

@@ -359,12 +359,8 @@ MonoBehaviour:
   entryDoor: {fileID: 8543226019084302802}
   exitDoor: {fileID: 8786922171881328684}
   enemylist:
-    xy:
-    - {x: 0, y: 2.7}
-    - {x: 1.3, y: -2.4}
-    enemies:
-    - {fileID: 3417758765005349436, guid: 19c8e9c18f19f7f43ad6eef5e8f2ccc7, type: 3}
-    - {fileID: 3417758765005349436, guid: 19c8e9c18f19f7f43ad6eef5e8f2ccc7, type: 3}
+    xy: []
+    enemies: []
 --- !u!1 &6567619790058015650
 GameObject:
   m_ObjectHideFlags: 0

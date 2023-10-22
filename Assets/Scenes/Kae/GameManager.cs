@@ -1,13 +1,20 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager current;
     
 
     int enemyCount=0;
     int level;
+    public event Action ondeath;
+    private void Awake()
+    {
+        current = this;
+    }
 
     private void Start()
     {
@@ -15,10 +22,7 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public void openDoor()
-    {
-        //observer
-    }
+    
     public void endGame()
     {
     }
@@ -35,8 +39,13 @@ public class GameManager : MonoBehaviour
         enemyCount -= 1;
         if (enemyCount == 0)
         {
-            openDoor();
+            
             level += 1;
+            if(ondeath != null)
+            {
+                ondeath();
+            }
+            
 
         }
 
