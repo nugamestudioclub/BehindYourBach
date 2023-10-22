@@ -26,13 +26,6 @@ public class GameManager : MonoBehaviour
     public void endGame()
     {
     }
-    public void SpawnEnemy(EnemyList enemylist, Transform gameobject)
-    {
-        for (int i = 0; i < enemylist.enemies.Length; i++)
-        {
-            GameObject newEnemy = Instantiate(enemylist.enemies[i], enemylist.xy[i], Quaternion.identity, gameobject.transform);
-        }
-    }
 
     public void decreaseEnemy()
     {

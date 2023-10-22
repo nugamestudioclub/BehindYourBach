@@ -451,6 +451,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entryDoor: {fileID: 8543226019084302802}
   exitDoor: {fileID: 8786922171881328684}
+  enemies: {fileID: 4961437557547089704}
+  enemyCount: 0
   enemylist:
     xy:
     - {x: 2.3, y: -1.5}
