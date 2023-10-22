@@ -4,30 +4,46 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    //add enemyspawner
+    
 
-    int enemyCount;
+    int enemyCount=0;
     int level;
 
     private void Start()
     {
-        enemyCount = 0;
         level = 1;
     }
 
 
     public void openDoor()
     {
-        
-    }
-
-    public void startRoom()
-    {
-        //takes in level or which room we're in
-        //close doors, spawn enemy, set count, despawns last room, spawns next room
+        //observer
     }
     public void endGame()
     {
-        //
+    }
+    public void SpawnEnemy(EnemyList enemylist, Transform gameobject)
+    {
+        for (int i = 0; i < enemylist.enemies.Length; i++)
+        {
+            GameObject newEnemy = Instantiate(enemylist.enemies[i], enemylist.xy[i], Quaternion.identity, gameobject.transform);
+        }
+    }
+
+    public void decreaseEnemy()
+    {
+        enemyCount -= 1;
+        if (enemyCount == 0)
+        {
+            openDoor();
+            level += 1;
+
+        }
+
+    }
+
+    public void setEnemy(int num)
+    {
+        enemyCount = num;
     }
 }

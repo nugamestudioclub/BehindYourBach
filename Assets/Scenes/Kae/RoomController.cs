@@ -4,23 +4,27 @@ using UnityEngine;
 
 public class RoomController : MonoBehaviour
 {
-    GameObject entryDoor;
-    GameObject exitDoor;
-    //enemy list
+    [SerializeField] private GameObject entryDoor;
+    [SerializeField] private GameObject exitDoor;
 
-    //doors
-    //Door.GetComponent<boxCollider>().enabled=false;
-    //on trigger enter
+    private void Start()
+    {
+        entryDoor.gameObject.SetActive(false);
+    }
+    
+
 
     public EnemyList enemylist;
 
-   
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
 
-        FindObjectOfType<EnemySpawner>().SpawnEnemy(enemylist,this.transform);
+        FindObjectOfType<GameManager>().SpawnEnemy(enemylist, this.transform);
+        entryDoor.gameObject.SetActive(true);
+        FindObjectOfType<GameManager>().setEnemy(enemylist.enemies.Length);
         this.GetComponent<BoxCollider2D>().enabled = false;
-        //close doors
+        //subscribe to observer
     }
 }
