@@ -8,17 +8,21 @@ public class Enemy1 : MonoBehaviour
     private Rigidbody2D ridge2D;
 
     private int health=2;
+    private int speed = 2;
 
     private void Awake()
     {
         ridge2D = GetComponent<Rigidbody2D>();
     }
 
-    private void patrolRout()
+    private void Update()
     {
+
         for(int i = 0; i < patrol.Length; i++)
         {
-           // ridge2D =patrol[i];
+            while (transform.position != patrol[i].position) 
+            { transform.position = Vector3.MoveTowards(transform.position, patrol[i].position, speed); }
+
         }
     }
 
