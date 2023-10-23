@@ -50,7 +50,6 @@ public class Enemy1 : MonoBehaviour
         {
             GameManager.current.decreaseEnemy();
             Destroy(this.gameObject);
-            
         }
     }
 
