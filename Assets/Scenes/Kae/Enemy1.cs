@@ -4,26 +4,41 @@ using UnityEngine;
 
 public class Enemy1 : MonoBehaviour
 {
-    [SerializeField] private Transform[] patrol;
-    private Rigidbody2D ridge2D;
+    [SerializeField] private Transform[] points;
+    private Vector3[] patrol;
+    
+
 
     private int health=2;
-    private int speed = 2;
+    private float speed = .006f;
+    private int index = 0;
 
-    private void Awake()
+    
+    private void Start()
     {
-        ridge2D = GetComponent<Rigidbody2D>();
+        patrol = new Vector3[points.Length];
+        for (int i = 0; i < points.Length; i++){
+            patrol[i] = points[i].position; }
     }
+
 
     private void Update()
     {
-
-        for(int i = 0; i < patrol.Length; i++)
+        
+       
+        
+        if (transform.position != patrol[index]) 
+            { transform.position = Vector3.MoveTowards(transform.position, patrol[index], speed); }
+        if(transform.position == patrol[index])
         {
-            while (transform.position != patrol[i].position) 
-            { transform.position = Vector3.MoveTowards(transform.position, patrol[i].position, speed); }
-
+            if (index == patrol.Length-1)
+            {
+                index = 0;
+            }
+            else { index += 1; }
         }
+
+        
     }
 
 

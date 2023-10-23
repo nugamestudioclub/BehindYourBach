@@ -146,7 +146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 350395379b56c2647a021db9db5bdab9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  patrol:
+  points:
   - {fileID: 128705812055831174}
   - {fileID: 2366032393296073674}
 --- !u!1 &4353771919411649707
