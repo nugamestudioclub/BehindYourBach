@@ -48,4 +48,22 @@ public class GameManager : MonoBehaviour
     {
         enemyCount = num;
     }
+    public void Fire(Transform firepoint, GameObject Bullet)
+    {
+        GameObject bullet = Instantiate(Bullet, firepoint.position, firepoint.rotation);
+        bullet.GetComponent<Rigidbody2D>().AddForce(firepoint.up * 20, ForceMode2D.Impulse);
+    }
+
+    public void Flip(GameObject objects)
+    {
+        Vector3 currentscale = objects.transform.localScale;
+        currentscale.x *= -1;
+        objects.transform.localScale = currentscale;
+        
+    }
+
+
+
+
+
 }
