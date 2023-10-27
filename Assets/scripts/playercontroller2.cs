@@ -13,7 +13,7 @@ public class playercontroller2 : MonoBehaviour
     public int firespeed = 20;
     Vector2 moveDirection;
     [SerializeField]
-    private int lives;
+    public int lives;
     bool facingRight=true;
 
 
@@ -23,6 +23,7 @@ public class playercontroller2 : MonoBehaviour
     {
         lives = 5;
         rb = GetComponent<Rigidbody2D>();
+        
     }
     private void Update()
     {
@@ -60,6 +61,7 @@ public class playercontroller2 : MonoBehaviour
             GameManager.current.Flip(offset.gameObject);
             facingRight = !facingRight;
         }
+        if (lives <=0) { GameManager.current.resetScene(); ; }
     }
     
 
@@ -72,16 +74,7 @@ public class playercontroller2 : MonoBehaviour
 
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "damage") {
-            lives -= 1;
-            if (lives <= 0 )
-            {
-                Destroy(gameObject);
-            }
-        }
-    }
+    
     
 
 

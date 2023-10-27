@@ -22,13 +22,14 @@ public class RoomController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
 
-        
-        entryDoor.gameObject.SetActive(true);
-        GameManager.current.setEnemy(enemyCount);
-        enemies.gameObject.SetActive(true);
-        this.GetComponent<BoxCollider2D>().enabled = false;
-        GameManager.current.ondeath += ExitRoom;
-
+        if (collision.gameObject.tag == "Player")
+        {
+            entryDoor.gameObject.SetActive(true);
+            GameManager.current.setEnemy(enemyCount);
+            enemies.gameObject.SetActive(true);
+            this.GetComponent<BoxCollider2D>().enabled = false;
+            GameManager.current.ondeath += ExitRoom;
+        }
     }
 
     private void ExitRoom()

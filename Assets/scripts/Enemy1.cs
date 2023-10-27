@@ -21,10 +21,12 @@ public class Enemy1 : MonoBehaviour
     private bool chase;
     private float attackspeed;
     [SerializeField]public int health;
-    
-    
+    private bool facingRight=true;
 
-    
+
+
+
+
     private void Awake()
     {
         patrol = new Vector3[points.Length];
@@ -39,7 +41,7 @@ public class Enemy1 : MonoBehaviour
         player = GameObject.Find("Player");
 
         
-        //switch to set bullet and sprite
+        //switch for set bullet and sprite
 
     }
 
@@ -51,7 +53,26 @@ public class Enemy1 : MonoBehaviour
 
         if (chase == false) {
             if (transform.position != patrol[index])
-            { transform.position = Vector3.MoveTowards(transform.position, patrol[index], Character.speed); }
+            { 
+                transform.position = Vector3.MoveTowards(transform.position, patrol[index], Character.speed);
+                if (attack == false)
+                {
+                    if (transform.position.x < patrol[index].x && !facingRight)
+                    {
+                        GameManager.current.Flip(gameObject);
+                        GameManager.current.Flip(offset.gameObject);
+                        facingRight = !facingRight;
+                    }
+                    if (transform.position.x > patrol[index].x && facingRight)
+                    {
+                        GameManager.current.Flip(gameObject);
+                        GameManager.current.Flip(offset.gameObject);
+                        facingRight = !facingRight;
+                    }
+                }
+
+
+            }
             if (transform.position == patrol[index])
             {
                 if (index == patrol.Length - 1)
@@ -65,6 +86,7 @@ public class Enemy1 : MonoBehaviour
         if (chase==true)
         {
             transform.position = Vector3.MoveTowards(transform.position, player.transform.position, Character.speed);
+            
         }
 
         if (attack == true)
@@ -75,6 +97,18 @@ public class Enemy1 : MonoBehaviour
                 GameManager.current.Fire(firepoint, Bullet);
                 attackspeed = Character.shootdelay;
                 
+            }
+            if (transform.position.x < player.transform.position.x && !facingRight)
+            {
+                GameManager.current.Flip(gameObject);
+                GameManager.current.Flip(offset.gameObject);
+                facingRight = !facingRight;
+            }
+            if (transform.position.x > player.transform.position.x && facingRight)
+            {
+                GameManager.current.Flip(gameObject);
+                GameManager.current.Flip(offset.gameObject);
+                facingRight = !facingRight;
             }
         }
 
@@ -96,13 +130,14 @@ public class Enemy1 : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        
-        health -= 1;
-        if (health <= 0)
-        {
-            
-            GameManager.current.decreaseEnemy();
-            Destroy(gameObject);
+        if (collision.gameObject.tag == "damage") {
+            health -= 1;
+            if (health <= 0)
+            {
+
+                GameManager.current.decreaseEnemy();
+                Destroy(gameObject);
+            }
         }
     }
 
