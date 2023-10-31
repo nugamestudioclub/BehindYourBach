@@ -8,6 +8,8 @@ public class detector : MonoBehaviour
     public enum state { attack, chase }
     public state State;
 
+    public bool inverse=false;
+
 
     public void Awake()
     {
@@ -17,7 +19,7 @@ public class detector : MonoBehaviour
     {
         if (collision.gameObject.Equals(player))
         {
-            this.GetComponentInParent<Enemy1>().changeState(State.ToString(), true);
+            this.GetComponentInParent<Enemymovement>().changeState(State.ToString(), !inverse);
 
         }
     }
@@ -26,7 +28,7 @@ public class detector : MonoBehaviour
         if (collision.gameObject.Equals(player))
         {
 
-            this.GetComponentInParent<Enemy1>().changeState(State.ToString(), false);
+            this.GetComponentInParent<Enemymovement>().changeState(State.ToString(), inverse);
 
         }
     }

@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     int enemyCount=0;
     int level;
     public event Action ondeath;
+   
     private void Awake()
     {
         current = this;
@@ -53,6 +54,13 @@ public class GameManager : MonoBehaviour
     {
         GameObject bullet = Instantiate(Bullet, firepoint.position, firepoint.rotation);
         bullet.GetComponent<Rigidbody2D>().AddForce(firepoint.up * 20, ForceMode2D.Impulse);
+        
+    }
+    public void melee(Transform firepoint, GameObject Bullet)
+    {
+        GameObject bullet = Instantiate(Bullet, firepoint.position, firepoint.rotation);
+        bullet.GetComponent<Rigidbody2D>().AddForce(firepoint.up * 20, ForceMode2D.Impulse);
+        bullet.GetComponent<bullet>().ismelee = true;
     }
 
     public void Flip(GameObject objects)
@@ -62,6 +70,7 @@ public class GameManager : MonoBehaviour
         objects.transform.localScale = currentscale;
         
     }
+
 
     public void resetScene()
     {

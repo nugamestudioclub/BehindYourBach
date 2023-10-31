@@ -6,12 +6,10 @@ using UnityEngine;
 public class characters : ScriptableObject
 {
     
-    public float shootdelay;
-    //lists corrospond to weapon  sing Ghost front, back, and bullet then mic then gutar then violin
+    //lists corrospond to enemy  mellee classical front, back, and pop then rock 
     public List<Sprite> sprites;
     public List<GameObject> Bullets;
-    public int maxHealth;
-    public float speed;
-    public int attackradius;
+    
+    
     
 }

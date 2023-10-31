@@ -10,15 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 41a8605be5211344abcb38005ff27084, type: 3}
-  m_Name: Ghost
+  m_Name: classical
   m_EditorClassIdentifier: 
-  shootdelay: 40
+  shootdelay: 5
   sprites:
   - {fileID: 0}
   - {fileID: 0}
   Bullets:
-  - {fileID: 2457215177816052464, guid: ee8645ae026c4c242ba296c2489fd508, type: 3}
-  - {fileID: 2457215177816052464, guid: ee8645ae026c4c242ba296c2489fd508, type: 3}
   - {fileID: 2457215177816052464, guid: ee8645ae026c4c242ba296c2489fd508, type: 3}
   - {fileID: 2457215177816052464, guid: ee8645ae026c4c242ba296c2489fd508, type: 3}
   maxHealth: 2

@@ -10,11 +10,12 @@ public class playercontroller2 : MonoBehaviour
     public Transform offset;
     public Transform firepoint;
     public float fireforce = 20f;
-    public int firespeed = 20;
+    public int firespeed = 2;
     Vector2 moveDirection;
-    [SerializeField]
     public int lives;
     bool facingRight=true;
+    bool isStunned = false;
+    public float stunTime=10;
 
 
 
@@ -23,6 +24,7 @@ public class playercontroller2 : MonoBehaviour
     {
         lives = 5;
         rb = GetComponent<Rigidbody2D>();
+       
         
     }
     private void Update()
@@ -49,13 +51,13 @@ public class playercontroller2 : MonoBehaviour
             firespeed = 20;
         }
 
-        if (movex >0 && !facingRight)
+        if (movex >0 && !facingRight && isStunned==false)
         {
             GameManager.current.Flip(gameObject);
             GameManager.current.Flip(offset.gameObject);
             facingRight = !facingRight;
         }
-        if (movex < 0 && facingRight)
+        if (movex < 0 && facingRight && isStunned == false)
         {
             GameManager.current.Flip(gameObject);
             GameManager.current.Flip(offset.gameObject);
@@ -67,6 +69,15 @@ public class playercontroller2 : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (stunTime > -160)
+        {
+            stunTime -= 1;
+            if (stunTime==0)
+            {
+                isStunned = false;
+            }
+        }
+
         firespeed -= 1;
 
         rb.velocity = new Vector2(moveDirection.x * moveSpeed, moveDirection.y * moveSpeed);
@@ -74,8 +85,26 @@ public class playercontroller2 : MonoBehaviour
 
     }
 
-    
-    
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag== "meelee" || stunTime < -150)
+        {
+            Debug.Log("coll");
+          // if ((collision.gameObject.transform.position.x > transform.position.x && !facingRight) || (collision.gameObject.transform.position.x < transform.position.x && facingRight)) {
+                if (isStunned == false)
+                {
+                    Debug.Log("flip");
+                    GameManager.current.Flip(gameObject);
+                    GameManager.current.Flip(offset.gameObject);
+                    facingRight = !facingRight;
+                    isStunned = true;
+                    stunTime = 150;
+                }
+           //}
+        }
+    }
+
+
 
 
 
