@@ -16,6 +16,12 @@ public class playercontroller2 : MonoBehaviour
     bool facingRight=true;
     bool isStunned = false;
     public float stunTime=10;
+    private enum weapontype { sing, mic, violin, Egutar }
+    private weapontype weapon;
+    private bool hasmic = false;
+    private bool hasviolin = false;
+    private bool hasgutar = false;
+
 
 
 
@@ -24,9 +30,48 @@ public class playercontroller2 : MonoBehaviour
     {
         lives = 5;
         rb = GetComponent<Rigidbody2D>();
+        weapon = weapontype.Egutar;
        
         
     }
+
+
+    /*
+    public void gutarAttacksetup(Transform thisgame, GameObject Bullet)
+    {
+
+        //make two points that will be the firepoint for two extra bullets ,make firepoint the parent so it moves with firepoint
+        GameObject emptyGO = new GameObject();
+        
+        Vector3[] veclist = new Vector3[3];
+
+        veclist[1] = thisgame.transform.position;//original
+        veclist[2] = new Vector3(thisgame.transform.position.x - 1f, thisgame.transform.position.y - .2f);//left
+        veclist[0] = new Vector3(thisgame.transform.position.x + 1f, thisgame.transform.position.y - .2f);//right
+
+
+        for (int i = 0; i < 3; i++)
+        {
+            if (i == 0) { emptyGO.transform.eulerAngles = new Vector3(thisgame.transform.eulerAngles.x, thisgame.transform.eulerAngles.y, thisgame.transform.eulerAngles.z + 10); }
+            if (i == 2) { emptyGO.transform.eulerAngles = new Vector3(thisgame.transform.eulerAngles.x, thisgame.transform.eulerAngles.y, thisgame.transform.eulerAngles.z + 10); }
+            emptyGO.transform.localPosition = veclist[i];
+            GameManager.current.Fire(emptyGO.transform, Bullet);
+            Destroy(emptyGO);
+        }
+    }
+
+    */
+
+
+
+
+
+
+
+
+
+
+
     private void Update()
     {
         float movex = Input.GetAxisRaw("Horizontal");
@@ -43,12 +88,39 @@ public class playercontroller2 : MonoBehaviour
         Vector3 aimDirection = mousePosition - transform.position;
         float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg ;
         offset.eulerAngles = new Vector3(0, 0, angle);
-        
+
+
+        if (Input.GetKeyDown("1")) { Debug.Log("1"); }
+
+
+
 
         if (Input.GetMouseButtonDown(0) && firespeed < 0)
         {
-            GameManager.current.Fire(firepoint,bulletPrefab);
-            firespeed = 20;
+            
+
+            switch (weapon)
+            {
+                case (weapontype.sing):
+
+                    GameManager.current.Fire(firepoint, bulletPrefab);
+                    firespeed = 20;
+                    break;
+                case (weapontype.mic):
+                    GameManager.current.micAttack(gameObject, bulletPrefab);
+                    firespeed = 40;
+                    break;
+                case (weapontype.violin):
+                    break;
+                case (weapontype.Egutar):
+                    GameManager.current.gutarAttack(firepoint, bulletPrefab);
+                    break;
+            }
+
+
+
+
+
         }
 
         if (movex >0 && !facingRight && isStunned==false)
@@ -89,18 +161,24 @@ public class playercontroller2 : MonoBehaviour
     {
         if (collision.gameObject.tag== "meelee" || stunTime < -150)
         {
-            Debug.Log("coll");
-          // if ((collision.gameObject.transform.position.x > transform.position.x && !facingRight) || (collision.gameObject.transform.position.x < transform.position.x && facingRight)) {
+          if ((collision.gameObject.transform.position.x > transform.position.x && facingRight) ) {
                 if (isStunned == false)
                 {
-                    Debug.Log("flip");
                     GameManager.current.Flip(gameObject);
                     GameManager.current.Flip(offset.gameObject);
                     facingRight = !facingRight;
                     isStunned = true;
                     stunTime = 150;
                 }
-           //}
+           }
+           if(collision.gameObject.transform.position.x < transform.position.x && !facingRight)
+            {
+                GameManager.current.Flip(gameObject);
+                GameManager.current.Flip(offset.gameObject);
+                facingRight = !facingRight;
+                isStunned = true;
+                stunTime = 150;
+            }
         }
     }
 
