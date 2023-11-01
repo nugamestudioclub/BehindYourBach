@@ -10,6 +10,7 @@ public class bullet : MonoBehaviour
     private Rigidbody2D rb;
     private Vector3 lastVelocity;
     public bool ismelee=false;
+    public int damage;
     
     
 

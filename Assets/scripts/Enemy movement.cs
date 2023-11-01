@@ -25,6 +25,7 @@ public class Enemymovement : MonoBehaviour
     [SerializeField] private GameObject chasepoint;
     [SerializeField] private GameObject inverseChasePoint;
     private float speed;
+    private int damage;
 
 
 
@@ -156,7 +157,7 @@ public class Enemymovement : MonoBehaviour
                 switch (weapon)
                 {
                     case weapontype.range:
-                        GameManager.current.Fire(firepoint, Bullet);
+                        GameManager.current.Fire(firepoint, Bullet, damage);
                         attackspeed = 40;
                         break;
 
@@ -167,7 +168,7 @@ public class Enemymovement : MonoBehaviour
 
                         if (transform.position.y - 1 < player.transform.position.y && player.transform.position.y < transform.position.y + 1 && player.transform.position.x > transform.position.x - 2 && player.transform.position.x < transform.position.x + 2)
                         {
-                            GameManager.current.melee(firepoint, Bullet);
+                            GameManager.current.melee(firepoint, Bullet, damage);
                             attackspeed = 100;
                         }
                         
@@ -178,13 +179,13 @@ public class Enemymovement : MonoBehaviour
                         {
                             if (transform.position.y - 1 < player.transform.position.y && player.transform.position.y < transform.position.y + 1 && player.transform.position.x > transform.position.x - 2 && player.transform.position.x < transform.position.x + 2)
                             {
-                                GameManager.current.melee(firepoint, Bullet);
+                                GameManager.current.melee(firepoint, Bullet,damage);
                                 attackspeed = 100;
                             }
                         }
                         else
                         {
-                            GameManager.current.Fire(firepoint, Bullet);
+                            GameManager.current.Fire(firepoint, Bullet, damage);
                             attackspeed = 40;
                         }
                         break;
@@ -248,6 +249,7 @@ public class Enemymovement : MonoBehaviour
                 chasepoint.GetComponent<CircleCollider2D>().radius = 3;
                 inverseChasePoint.GetComponent<CircleCollider2D>().radius = 2;
                 speed = .005f;
+                damage = 1;
                 break;
              
             case weapontype.melee:
@@ -259,6 +261,7 @@ public class Enemymovement : MonoBehaviour
                 chasepoint.GetComponent<CircleCollider2D>().radius = 5;
                 inverseChasePoint.GetComponent<CircleCollider2D>().radius = 1;
                 speed = .01f;
+                damage = 1;
                 break;
             case weapontype.combo:
                 sprite[0] = Character.sprites[4];
@@ -269,6 +272,7 @@ public class Enemymovement : MonoBehaviour
                 chasepoint.GetComponent<CircleCollider2D>().radius = 3;
                 inverseChasePoint.GetComponent<CircleCollider2D>().radius = 1;
                 speed = .008f;
+                damage = 1;
                 break;
 
 

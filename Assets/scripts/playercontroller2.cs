@@ -21,6 +21,7 @@ public class playercontroller2 : MonoBehaviour
     private bool hasmic = false;
     private bool hasviolin = false;
     private bool hasgutar = false;
+    private float holdcount;
 
 
 
@@ -30,47 +31,10 @@ public class playercontroller2 : MonoBehaviour
     {
         lives = 5;
         rb = GetComponent<Rigidbody2D>();
-        weapon = weapontype.Egutar;
+        weapon = weapontype.violin;
        
         
     }
-
-
-    /*
-    public void gutarAttacksetup(Transform thisgame, GameObject Bullet)
-    {
-
-        //make two points that will be the firepoint for two extra bullets ,make firepoint the parent so it moves with firepoint
-        GameObject emptyGO = new GameObject();
-        
-        Vector3[] veclist = new Vector3[3];
-
-        veclist[1] = thisgame.transform.position;//original
-        veclist[2] = new Vector3(thisgame.transform.position.x - 1f, thisgame.transform.position.y - .2f);//left
-        veclist[0] = new Vector3(thisgame.transform.position.x + 1f, thisgame.transform.position.y - .2f);//right
-
-
-        for (int i = 0; i < 3; i++)
-        {
-            if (i == 0) { emptyGO.transform.eulerAngles = new Vector3(thisgame.transform.eulerAngles.x, thisgame.transform.eulerAngles.y, thisgame.transform.eulerAngles.z + 10); }
-            if (i == 2) { emptyGO.transform.eulerAngles = new Vector3(thisgame.transform.eulerAngles.x, thisgame.transform.eulerAngles.y, thisgame.transform.eulerAngles.z + 10); }
-            emptyGO.transform.localPosition = veclist[i];
-            GameManager.current.Fire(emptyGO.transform, Bullet);
-            Destroy(emptyGO);
-        }
-    }
-
-    */
-
-
-
-
-
-
-
-
-
-
 
     private void Update()
     {
@@ -95,15 +59,14 @@ public class playercontroller2 : MonoBehaviour
 
 
 
-        if (Input.GetMouseButtonDown(0) && firespeed < 0)
+        if (Input.GetMouseButton(0) && firespeed < 0)
         {
-            
-
+           
             switch (weapon)
             {
                 case (weapontype.sing):
 
-                    GameManager.current.Fire(firepoint, bulletPrefab);
+                    GameManager.current.Fire(firepoint, bulletPrefab,1);
                     firespeed = 20;
                     break;
                 case (weapontype.mic):
@@ -111,17 +74,30 @@ public class playercontroller2 : MonoBehaviour
                     firespeed = 40;
                     break;
                 case (weapontype.violin):
+                   
+
+                    holdcount += 1;
+                    
+                    
+                    
+                    
                     break;
                 case (weapontype.Egutar):
                     GameManager.current.gutarAttack(firepoint, bulletPrefab);
+                    firespeed = 40;
                     break;
             }
-
-
-
-
+        }
+       
+         if (Input.GetMouseButtonUp(0) && weapon == weapontype.violin)
+         {
+            Debug.Log(holdcount);
+            GameManager.current.violinAttack(firepoint, bulletPrefab, holdcount);
+            holdcount = 0;
+            firespeed = 40;
 
         }
+
 
         if (movex >0 && !facingRight && isStunned==false)
         {
