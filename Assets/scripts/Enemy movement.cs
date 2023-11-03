@@ -10,7 +10,7 @@ public class Enemymovement : MonoBehaviour
     public Transform firepoint;
     public Transform offset;
     [SerializeField] private characters Character;
-    public enum weapontype { range, combo, melee }
+    public enum weapontype { range, combo, melee, boss }
     public weapontype weapon;
     private GameObject Bullet;
     private int index = 0;
@@ -26,6 +26,7 @@ public class Enemymovement : MonoBehaviour
     [SerializeField] private GameObject inverseChasePoint;
     private float speed;
     private int damage;
+    private int point;
 
 
 
@@ -179,7 +180,7 @@ public class Enemymovement : MonoBehaviour
                         {
                             if (transform.position.y - 1 < player.transform.position.y && player.transform.position.y < transform.position.y + 1 && player.transform.position.x > transform.position.x - 2 && player.transform.position.x < transform.position.x + 2)
                             {
-                                GameManager.current.melee(firepoint, Bullet,damage);
+                                GameManager.current.melee(firepoint, Bullet,2);
                                 attackspeed = 100;
                             }
                         }
@@ -187,6 +188,24 @@ public class Enemymovement : MonoBehaviour
                         {
                             GameManager.current.Fire(firepoint, Bullet, damage);
                             attackspeed = 40;
+                        }
+                        break;
+                    case weapontype.boss:
+                        switch (Character.boss)
+                        {
+                            case "classic":
+                                GameManager.current.Fire(firepoint, Bullet, damage);
+                                if (attackspeed == 5)
+                                { attackspeed = 40; }
+                                else { attackspeed = 5; }
+                                
+
+                                break;
+                            case "rock":
+
+                                break;
+                            case "pop":
+                                break;
                         }
                         break;
                 }
@@ -219,12 +238,15 @@ public class Enemymovement : MonoBehaviour
     {
         if (collision.gameObject.tag == "damage")
         {
-            health -= 1;//change to - collisions component damage
+            health -= collision.gameObject.GetComponent<bullet>().damage;
             if (health <= 0)
             {
-
-                GameManager.current.decreaseEnemy();
+                GameManager.current.decreaseEnemy(point);
                 Destroy(gameObject);
+                if (weapon==weapontype.boss)
+                {
+                    GameManager.current.BossKill();
+                }
             }
         }
     }
@@ -250,6 +272,7 @@ public class Enemymovement : MonoBehaviour
                 inverseChasePoint.GetComponent<CircleCollider2D>().radius = 2;
                 speed = .005f;
                 damage = 1;
+                point = 1;
                 break;
              
             case weapontype.melee:
@@ -261,7 +284,8 @@ public class Enemymovement : MonoBehaviour
                 chasepoint.GetComponent<CircleCollider2D>().radius = 5;
                 inverseChasePoint.GetComponent<CircleCollider2D>().radius = 1;
                 speed = .01f;
-                damage = 1;
+                damage = 2;
+                point = 1;
                 break;
             case weapontype.combo:
                 sprite[0] = Character.sprites[4];
@@ -273,6 +297,19 @@ public class Enemymovement : MonoBehaviour
                 inverseChasePoint.GetComponent<CircleCollider2D>().radius = 1;
                 speed = .008f;
                 damage = 1;
+                point = 1;
+                break;
+            case weapontype.boss:
+                sprite[0] = Character.sprites[6];
+                sprite[1] = Character.sprites[7];
+                Bullet = Character.Bullets[4];
+                health = 10;
+                attackpoint.GetComponent<CircleCollider2D>().radius = 5;
+                chasepoint.GetComponent<CircleCollider2D>().radius = 3;
+                inverseChasePoint.GetComponent<CircleCollider2D>().radius = 1;
+                speed = .008f;
+                damage = 1;
+                point = 5;
                 break;
 
 

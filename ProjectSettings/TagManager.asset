@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Enemy
   - damage
+  - mic
+  - violin
+  - gutar
+  - exit
   layers:
   - Default
   - TransparentFX

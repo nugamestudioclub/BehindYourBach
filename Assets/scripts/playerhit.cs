@@ -9,8 +9,12 @@ public class playerhit : MonoBehaviour
     {
         if (collision.gameObject.tag == "damage")
         {
-            GetComponentInParent<playercontroller2>().lives -= 1;
-            
+            GetComponentInParent<playercontroller2>().lives -= collision.gameObject.GetComponent<bullet>().damage;
+
         }
+        
+
     }
+
+
 }

@@ -9,6 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 286d494d5c366af4fb6631e9c73f96ce, type: 3}
-  m_Name: violin
+  m_Script: {fileID: 11500000, guid: 41a8605be5211344abcb38005ff27084, type: 3}
+  m_Name: Elvis
   m_EditorClassIdentifier: 
+  sprites:
+  - {fileID: 0}
+  - {fileID: 0}
+  Bullets:
+  - {fileID: 0}
+  boss: 

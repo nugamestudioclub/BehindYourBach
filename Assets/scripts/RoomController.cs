@@ -14,8 +14,18 @@ public class RoomController : MonoBehaviour
     {
         entryDoor.gameObject.SetActive(false);
         enemies.gameObject.SetActive(false);
+        DontDestroyOnLoad(gameObject);
 
-
+        if (GameManager.current.level==1) {
+            string[] words = new string[4];
+            words[0] = "welcome to the musitian tomb where all the great names in music are buried. first basics press space for next dialog";
+            words[1] = "nice you know the rest left mouse for shoot wasd and arrows to move you'll figure it out";
+            words[2] = "you say you want to become the best musician, what better way than proving your music is more powerful";
+            words[3] = "as a musician yourself you must know you cant fight one head on instead aim for the back and may the best musician win";
+            Dialog dialog = new Dialog();
+            dialog.sentences = words;
+            GameManager.current.startDialog(dialog);
+        }
     }
     
 

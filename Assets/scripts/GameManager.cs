@@ -3,47 +3,71 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager current;
+    private Queue<string> sentences;
+    public TextMeshProUGUI dialogtext;
+    public bool indialog;
+
+      
     
 
+    
+
+
     int enemyCount=0;
-    int level;
+    int Points=0;
     public event Action ondeath;
+    public bool mic;
+    public bool violin;
+    public bool gutar;
+    public int level=1;
+
    
     private void Awake()
     {
         current = this;
+        sentences = new Queue<string>();
     }
 
-    private void Start()
+    private void Update()
     {
-        level = 1;
+        if (Input.GetKeyDown("space") && indialog == true)
+        {
+            displayNextSentence();
+
+        }
     }
 
 
-    
+
+
+
     public void endGame()
     {
     }
 
-    public void decreaseEnemy()
+    public void decreaseEnemy(int point)
     {
         enemyCount -= 1;
+        Points += point;
         if (enemyCount == 0)
-        {
-            
-            level += 1;
-            if(ondeath != null)
-            {
-                ondeath();
-            }
-            
-
+        { 
+            Points += 20;
         }
 
+    }
+    public void BossKill()
+    {
+        if (ondeath != null)
+        {
+            ondeath();
+        }
+        level += 1;
     }
 
     public void setEnemy(int num)
@@ -103,32 +127,20 @@ public class GameManager : MonoBehaviour
         switch (power)
         {
             case  < 200:
-                Debug.Log("small");
+               
                 damage = 2;
                 break;
             case < 400:
-                Debug.Log("medium");
+                
                 damage = 4;
                 break;
             case > 400:
-                Debug.Log("large");
+                
                 damage = 6;
                 break;
         }
 
         GameManager.current.Fire(firepoint, Bullet,damage);
-        Debug.Log(damage);
-
-
-
-
-
-
-
-
-
-
-
 
     }
     public void micAttack(GameObject thisgame, GameObject Bullets)
@@ -156,11 +168,44 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public void startDialog(Dialog dialog)
+    {
+        indialog = true;
+        sentences.Clear();
+
+        foreach(string sentence in dialog.sentences){
+            sentences.Enqueue(sentence);
+        }
+        displayNextSentence();
+    }
+    public void displayNextSentence()
+    {
+        if (sentences.Count ==0)
+        {
+            EndDialog();
+            return;
+        }
+        string sentence = sentences.Dequeue();
+        dialogtext.text = sentence;
+        
+    }
+    public void EndDialog()
+    {
+        indialog = false;
+        dialogtext.text = "";
+    }
+
 
     public void resetScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
+    public void LoadScene(String scenename)
+    {
+        SceneManager.LoadScene(scenename);
+    }
+
+
 
 
 

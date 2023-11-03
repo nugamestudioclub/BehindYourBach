@@ -18,10 +18,11 @@ public class playercontroller2 : MonoBehaviour
     public float stunTime=10;
     private enum weapontype { sing, mic, violin, Egutar }
     private weapontype weapon;
-    private bool hasmic = false;
-    private bool hasviolin = false;
-    private bool hasgutar = false;
+    public bool hasmic = false;
+    public bool hasviolin = false;
+    public bool hasgutar = false;
     private float holdcount;
+    string[] words = new string[1];
 
 
 
@@ -32,6 +33,9 @@ public class playercontroller2 : MonoBehaviour
         lives = 5;
         rb = GetComponent<Rigidbody2D>();
         weapon = weapontype.violin;
+        hasviolin = GameManager.current.violin;
+        hasmic= GameManager.current.mic;
+        hasgutar = GameManager.current.gutar;
        
         
     }
@@ -53,8 +57,11 @@ public class playercontroller2 : MonoBehaviour
         float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg ;
         offset.eulerAngles = new Vector3(0, 0, angle);
 
-
-        if (Input.GetKeyDown("1")) { Debug.Log("1"); }
+        
+        if (Input.GetKeyDown("1")) { weapon = weapontype.sing; Debug.Log(weapon); }
+        if (Input.GetKeyDown("2" )&& hasmic == true) { weapon = weapontype.mic; Debug.Log(weapon); }
+        if (Input.GetKeyDown("3") && hasgutar==true) { weapon = weapontype.Egutar; Debug.Log(weapon); }
+        if (Input.GetKeyDown("4") && hasviolin==true) { weapon = weapontype.violin; Debug.Log(weapon); }
 
 
 
@@ -156,6 +163,48 @@ public class playercontroller2 : MonoBehaviour
                 stunTime = 150;
             }
         }
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+
+        if (collision.gameObject.tag == "mic" && hasmic==false)
+        {
+            hasmic = true;
+            GameManager.current.mic = true;
+
+            
+            words[0] = "you found a mic";
+            Dialog dialog=new Dialog();
+            dialog.sentences = words;
+            GameManager.current.startDialog(dialog);
+
+        }
+        if (collision.gameObject.tag == "violin" && hasviolin==false)
+        {
+            hasviolin = true;
+            GameManager.current.violin = true;
+
+            words[0] = "you found a violin";
+            Dialog dialog = new Dialog();
+            dialog.sentences = words;
+            GameManager.current.startDialog(dialog);
+        }
+        if (collision.gameObject.tag == "gutar" && hasgutar==false)
+        {
+            hasgutar = true;
+            GameManager.current.gutar = true;
+
+            words[0] = "you found a guitar";
+            Dialog dialog = new Dialog();
+            dialog.sentences = words;
+            GameManager.current.startDialog(dialog);
+        }
+
+        if (collision.gameObject.tag == "exit")
+        {
+            GameManager.current.LoadScene("Level"+ GameManager.current.level);
+        }
+
     }
 
 

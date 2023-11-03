@@ -11,6 +11,7 @@ public class bullet : MonoBehaviour
     private Vector3 lastVelocity;
     public bool ismelee=false;
     public int damage;
+    public string sender;
     
     
 

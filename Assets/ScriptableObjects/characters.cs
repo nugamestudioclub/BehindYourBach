@@ -9,6 +9,7 @@ public class characters : ScriptableObject
     //lists corrospond to enemy  mellee classical front, back, and pop then rock 
     public List<Sprite> sprites;
     public List<GameObject> Bullets;
+    public string boss;
     
     
     
