@@ -19,7 +19,7 @@ public class Enemymovement : MonoBehaviour
     private float attackspeed=0;
     private int health;
     private bool facingRight = true;
-    private bool facingForward = true;
+    private bool facingUp = true;
     private Sprite[] sprite= new Sprite[2];
     [SerializeField] private GameObject attackpoint;
     [SerializeField] private GameObject chasepoint;
@@ -50,6 +50,7 @@ public class Enemymovement : MonoBehaviour
         player = GameObject.Find("Player");
 
         setWeapon();
+        
 
     }
 
@@ -78,17 +79,17 @@ public class Enemymovement : MonoBehaviour
                         GameManager.current.Flip(offset.gameObject);
                         facingRight = !facingRight;
                     }
-                    if (transform.position.y < patrol[index].y && !facingForward )
+                    if (transform.position.y < patrol[index].y && !facingUp )
                     {
                         
                         gameObject.GetComponent<SpriteRenderer>().sprite = sprite[0];
-                        facingForward = !facingForward;
+                        facingUp = !facingUp;
                     }
-                    if (transform.position.y > patrol[index].y && facingForward )
+                    if (transform.position.y > patrol[index].y && facingUp )
                     {
                        
-                        gameObject.GetComponent<SpriteRenderer>().sprite = sprite[1];
-                        facingForward = !facingForward;
+                        gameObject.GetComponent<SpriteRenderer>().sprite = sprite[0];
+                        facingUp = !facingUp;
                     }
                 }
 
@@ -136,16 +137,7 @@ public class Enemymovement : MonoBehaviour
                 GameManager.current.Flip(offset.gameObject);
                 facingRight = !facingRight;
             }
-            if (transform.position.y < player.transform.position.y && !facingForward)
-            {
-                gameObject.GetComponent<SpriteRenderer>().sprite = sprite[0];
-                facingForward = !facingForward;
-            }
-            if (transform.position.y > player.transform.position.y && facingForward)
-            {
-                gameObject.GetComponent<SpriteRenderer>().sprite = sprite[1];
-                facingForward = !facingForward;
-            }
+            
 
         }
 
@@ -191,22 +183,9 @@ public class Enemymovement : MonoBehaviour
                         }
                         break;
                     case weapontype.boss:
-                        switch (Character.boss)
-                        {
-                            case "classic":
-                                GameManager.current.Fire(firepoint, Bullet, damage);
-                                if (attackspeed == 5)
-                                { attackspeed = 40; }
-                                else { attackspeed = 5; }
-                                
+                        GameManager.current.Fire(firepoint, Bullet, damage);
+                        attackspeed = 40;
 
-                                break;
-                            case "rock":
-
-                                break;
-                            case "pop":
-                                break;
-                        }
                         break;
                 }
             }
@@ -264,7 +243,7 @@ public class Enemymovement : MonoBehaviour
         {
             case weapontype.range:
                 sprite[0] = Character.sprites[0];
-                sprite[1] = Character.sprites[1];
+                
                 Bullet = Character.Bullets[0];
                 health = 2;
                 attackpoint.GetComponent<CircleCollider2D>().radius = 5;
@@ -276,8 +255,7 @@ public class Enemymovement : MonoBehaviour
                 break;
              
             case weapontype.melee:
-                sprite[0] = Character.sprites[2];
-                sprite[1] = Character.sprites[3];
+                sprite[0] = Character.sprites[1];
                 Bullet = Character.Bullets[2];
                 health = 6;
                 attackpoint.GetComponent<CircleCollider2D>().radius = 1.3f;
@@ -288,8 +266,7 @@ public class Enemymovement : MonoBehaviour
                 point = 1;
                 break;
             case weapontype.combo:
-                sprite[0] = Character.sprites[4];
-                sprite[1] = Character.sprites[5];
+                sprite[0] = Character.sprites[2];
                 Bullet = Character.Bullets[1];
                 health = 4;
                 attackpoint.GetComponent<CircleCollider2D>().radius = 5;
@@ -300,21 +277,21 @@ public class Enemymovement : MonoBehaviour
                 point = 1;
                 break;
             case weapontype.boss:
-                sprite[0] = Character.sprites[6];
-                sprite[1] = Character.sprites[7];
-                Bullet = Character.Bullets[4];
-                health = 10;
+                sprite[0] = Character.sprites[0];
+
+                Bullet = Character.Bullets[0];
+                health = 2;
                 attackpoint.GetComponent<CircleCollider2D>().radius = 5;
                 chasepoint.GetComponent<CircleCollider2D>().radius = 3;
-                inverseChasePoint.GetComponent<CircleCollider2D>().radius = 1;
-                speed = .008f;
+                inverseChasePoint.GetComponent<CircleCollider2D>().radius = 2;
+                speed = .005f;
                 damage = 1;
-                point = 5;
+                point = 1;
                 break;
 
 
         }
-        gameObject.GetComponent<SpriteRenderer>().sprite = sprite[1];
+        gameObject.GetComponent<SpriteRenderer>().sprite = sprite[0];
     }
 
 

@@ -31,37 +31,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7695839501119569033}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &3530752732478550191
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 9038492119095910864}
-  m_Layer: 0
-  m_Name: patrol points
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &9038492119095910864
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3530752732478550191}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7695839501119569033}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4217713039195785197
 GameObject:
   m_ObjectHideFlags: 0
@@ -388,7 +357,6 @@ Transform:
   - {fileID: 3228816351462998281}
   - {fileID: 1514357174105505839}
   - {fileID: 5570725606703517202}
-  - {fileID: 9038492119095910864}
   - {fileID: 4753510668092476043}
   - {fileID: 7024715896007112999}
   m_Father: {fileID: 0}

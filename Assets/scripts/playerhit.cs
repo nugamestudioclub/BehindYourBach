@@ -9,7 +9,21 @@ public class playerhit : MonoBehaviour
     {
         if (collision.gameObject.tag == "damage")
         {
-            GetComponentInParent<playercontroller2>().lives -= collision.gameObject.GetComponent<bullet>().damage;
+
+
+            if (collision.gameObject.GetComponent<bullet>().damage > 3) 
+            {
+                GetComponentInParent<playercontroller2>().lives -= 2;
+                GameManager.current.decreaseHealth(2);
+            }
+            else
+            {
+                GetComponentInParent<playercontroller2>().lives -= collision.gameObject.GetComponent<bullet>().damage;
+                GameManager.current.decreaseHealth(collision.gameObject.GetComponent<bullet>().damage);
+            }
+                
+            
+            
 
         }
         

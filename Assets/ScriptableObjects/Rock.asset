@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: Rock
   m_EditorClassIdentifier: 
   sprites:
-  - {fileID: 21300000, guid: 20fbd0e2d43fe2e4aa8338fae0e52160, type: 3}
-  - {fileID: 21300000, guid: 20fbd0e2d43fe2e4aa8338fae0e52160, type: 3}
-  - {fileID: 21300000, guid: 20fbd0e2d43fe2e4aa8338fae0e52160, type: 3}
-  - {fileID: 21300000, guid: 20fbd0e2d43fe2e4aa8338fae0e52160, type: 3}
-  - {fileID: 21300000, guid: 20fbd0e2d43fe2e4aa8338fae0e52160, type: 3}
-  - {fileID: 21300000, guid: 20fbd0e2d43fe2e4aa8338fae0e52160, type: 3}
+  - {fileID: 21300000, guid: aa20d4f17b7fe4f45ba54d381f44bf46, type: 3}
+  - {fileID: 21300000, guid: aa20d4f17b7fe4f45ba54d381f44bf46, type: 3}
+  - {fileID: 21300000, guid: aa20d4f17b7fe4f45ba54d381f44bf46, type: 3}
+  - {fileID: 21300000, guid: aa20d4f17b7fe4f45ba54d381f44bf46, type: 3}
   Bullets:
-  - {fileID: 6325114512098170583, guid: 404a8a46ced5f0e4eab7dba9b5282af0, type: 3}
-  - {fileID: 6325114512098170583, guid: 404a8a46ced5f0e4eab7dba9b5282af0, type: 3}
-  - {fileID: 6325114512098170583, guid: 404a8a46ced5f0e4eab7dba9b5282af0, type: 3}
+  - {fileID: 2457215177816052464, guid: ee8645ae026c4c242ba296c2489fd508, type: 3}
+  - {fileID: 2457215177816052464, guid: ee8645ae026c4c242ba296c2489fd508, type: 3}
+  - {fileID: 2457215177816052464, guid: ee8645ae026c4c242ba296c2489fd508, type: 3}
+  - {fileID: 2457215177816052464, guid: ee8645ae026c4c242ba296c2489fd508, type: 3}
+  boss: Rock

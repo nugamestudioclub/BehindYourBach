@@ -8,14 +8,13 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
+
     public static GameManager current;
     private Queue<string> sentences;
     public TextMeshProUGUI dialogtext;
+    public TextMeshProUGUI score;
+    public TextMeshProUGUI healthtext;
     public bool indialog;
-
-      
-    
-
     
 
 
@@ -26,21 +25,69 @@ public class GameManager : MonoBehaviour
     public bool violin;
     public bool gutar;
     public int level=1;
+    public int health=5;
+    GameObject ui;
 
-   
+
+
     private void Awake()
     {
-        current = this;
+        if (current != null)
+        {
+            Destroy(gameObject);
+
+        }
+        else
+        {
+            current = this;
+            DontDestroyOnLoad(gameObject);
+
+        }
+
+
+        dialogtext = GameObject.Find("dialog").GetComponentInChildren<TextMeshProUGUI>();
+        healthtext = GameObject.Find("health").GetComponentInChildren<TextMeshProUGUI>();
+        score = GameObject.Find("score").GetComponentInChildren<TextMeshProUGUI>();
+
+
+        
+        
+
         sentences = new Queue<string>();
+        current = this;
+
+
+    }
+    private void Start()
+    {
+
+        
+
+
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown("space") && indialog == true)
+        if (dialogtext==null)
+        {
+            dialogtext = GameObject.Find("dialog").GetComponentInChildren<TextMeshProUGUI>();
+            healthtext = GameObject.Find("health").GetComponentInChildren<TextMeshProUGUI>();
+            score = GameObject.Find("score").GetComponentInChildren<TextMeshProUGUI>();
+        }
+        if (Input.GetKeyDown("space") )
         {
             displayNextSentence();
 
         }
+
+        
+    }
+
+    public void decreaseHealth( int damage)
+    {
+
+        health -= damage;
+        healthtext.text = "health: " + health.ToString();
     }
 
 
@@ -59,6 +106,8 @@ public class GameManager : MonoBehaviour
         { 
             Points += 20;
         }
+        score.text = "score    " + Points.ToString();
+        
 
     }
     public void BossKill()
@@ -87,6 +136,8 @@ public class GameManager : MonoBehaviour
         bullet.GetComponent<Rigidbody2D>().AddForce(firepoint.up * 20, ForceMode2D.Impulse);
         bullet.GetComponent<bullet>().ismelee = true;
         bullet.GetComponent<bullet>().damage = damage;
+        bullet.GetComponent<bullet>().sender = "melee";
+
     }
 
     public void Flip(GameObject objects)
@@ -186,7 +237,11 @@ public class GameManager : MonoBehaviour
             return;
         }
         string sentence = sentences.Dequeue();
+        Debug.Log(sentence);
+        Debug.Log(dialogtext.text);
         dialogtext.text = sentence;
+
+        
         
     }
     public void EndDialog()
@@ -199,11 +254,13 @@ public class GameManager : MonoBehaviour
     public void resetScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        
     }
     public void LoadScene(String scenename)
     {
         SceneManager.LoadScene(scenename);
     }
+    
 
 
 

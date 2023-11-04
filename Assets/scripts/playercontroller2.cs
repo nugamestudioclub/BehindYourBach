@@ -23,19 +23,23 @@ public class playercontroller2 : MonoBehaviour
     public bool hasgutar = false;
     private float holdcount;
     string[] words = new string[1];
-
+    private bool facingUp = true;
+    private Sprite sprite;
+    public Sprite[] allsprite = new Sprite[2];
+    public Camera camera;
 
 
 
 
     private void Start()
     {
-        lives = 5;
+        lives = GameManager.current.health;
         rb = GetComponent<Rigidbody2D>();
         weapon = weapontype.violin;
         hasviolin = GameManager.current.violin;
         hasmic= GameManager.current.mic;
         hasgutar = GameManager.current.gutar;
+        
        
         
     }
@@ -47,21 +51,18 @@ public class playercontroller2 : MonoBehaviour
 
         moveDirection = new Vector2(movex,movey).normalized;
 
-
-
          Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePosition.z = 0;
        
 
         Vector3 aimDirection = mousePosition - transform.position;
         float angle = Mathf.Atan2(aimDirection.y, aimDirection.x) * Mathf.Rad2Deg ;
-        offset.eulerAngles = new Vector3(0, 0, angle);
+        gameObject.transform.eulerAngles = new Vector3(0, 0, angle);
 
         
-        if (Input.GetKeyDown("1")) { weapon = weapontype.sing; Debug.Log(weapon); }
-        if (Input.GetKeyDown("2" )&& hasmic == true) { weapon = weapontype.mic; Debug.Log(weapon); }
-        if (Input.GetKeyDown("3") && hasgutar==true) { weapon = weapontype.Egutar; Debug.Log(weapon); }
-        if (Input.GetKeyDown("4") && hasviolin==true) { weapon = weapontype.violin; Debug.Log(weapon); }
+        if (Input.GetKeyDown("1")) { weapon = weapontype.sing; gameObject.GetComponent<SpriteRenderer>().sprite = allsprite[0]; }
+        if (Input.GetKeyDown("3" )&& hasmic == true) { weapon = weapontype.mic; Debug.Log(weapon); gameObject.GetComponent<SpriteRenderer>().sprite = allsprite[2]; }
+        if (Input.GetKeyDown("2") && hasgutar==true) { weapon = weapontype.Egutar; Debug.Log(weapon); gameObject.GetComponent<SpriteRenderer>().sprite = allsprite[1]; }
 
 
 
@@ -84,10 +85,7 @@ public class playercontroller2 : MonoBehaviour
                    
 
                     holdcount += 1;
-                    
-                    
-                    
-                    
+                
                     break;
                 case (weapontype.Egutar):
                     GameManager.current.gutarAttack(firepoint, bulletPrefab);
@@ -98,14 +96,14 @@ public class playercontroller2 : MonoBehaviour
        
          if (Input.GetMouseButtonUp(0) && weapon == weapontype.violin)
          {
-            Debug.Log(holdcount);
+           
             GameManager.current.violinAttack(firepoint, bulletPrefab, holdcount);
             holdcount = 0;
             firespeed = 40;
 
         }
 
-
+         /*
         if (movex >0 && !facingRight && isStunned==false)
         {
             GameManager.current.Flip(gameObject);
@@ -118,7 +116,18 @@ public class playercontroller2 : MonoBehaviour
             GameManager.current.Flip(offset.gameObject);
             facingRight = !facingRight;
         }
-        if (lives <=0) { GameManager.current.resetScene(); ; }
+        if (movey > 0 && !facingRight && isStunned == false)
+        {
+            
+            facingRight = !facingRight;
+        }
+        if (movey < 0 && facingRight && isStunned == false)
+        {
+            
+            facingRight = !facingRight;
+        }*/
+
+        if (lives <=0) { GameManager.current.resetScene(); GameManager.current.health = 5; }
     }
     
 
@@ -135,14 +144,16 @@ public class playercontroller2 : MonoBehaviour
 
         firespeed -= 1;
 
-        rb.velocity = new Vector2(moveDirection.x * moveSpeed, moveDirection.y * moveSpeed);
+        Vector2 vec2 = new Vector2(moveDirection.x * moveSpeed, moveDirection.y * moveSpeed);
+        rb.velocity = vec2;
         
 
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag== "meelee" || stunTime < -150)
+        //Debug.Log(collision.gameObject.GetComponent<bullet>().sender);
+        if (collision.gameObject.GetComponent<bullet>() != null &&collision.gameObject.GetComponent<bullet>().sender == "melee" && stunTime < -150)
         {
           if ((collision.gameObject.transform.position.x > transform.position.x && facingRight) ) {
                 if (isStunned == false)
@@ -171,9 +182,10 @@ public class playercontroller2 : MonoBehaviour
         {
             hasmic = true;
             GameManager.current.mic = true;
+            Destroy(collision.gameObject);
 
-            
-            words[0] = "you found a mic";
+
+            words[0] = "you found a guitar press 3 to use ";
             Dialog dialog=new Dialog();
             dialog.sentences = words;
             GameManager.current.startDialog(dialog);
@@ -183,6 +195,7 @@ public class playercontroller2 : MonoBehaviour
         {
             hasviolin = true;
             GameManager.current.violin = true;
+            Destroy(collision.gameObject);
 
             words[0] = "you found a violin";
             Dialog dialog = new Dialog();
@@ -193,8 +206,9 @@ public class playercontroller2 : MonoBehaviour
         {
             hasgutar = true;
             GameManager.current.gutar = true;
+            Destroy(collision.gameObject);
 
-            words[0] = "you found a guitar";
+            words[0] = "you found a mic press 2 to use";
             Dialog dialog = new Dialog();
             dialog.sentences = words;
             GameManager.current.startDialog(dialog);
@@ -202,9 +216,23 @@ public class playercontroller2 : MonoBehaviour
 
         if (collision.gameObject.tag == "exit")
         {
-            GameManager.current.LoadScene("Level"+ GameManager.current.level);
+            if (GameManager.current.level == 3)
+            {
+                GameManager.current.LoadScene("End");
+            }
+            else
+            {
+                GameManager.current.LoadScene("Level" + GameManager.current.level);
+            }
         }
 
+    }
+
+    private void setWeapon(weapontype weapons)
+    {
+        
+
+        
     }
 
 
